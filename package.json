@@ -1,0 +1,98 @@
+{
+    "name": "remote-runner",
+    "displayName": "Remote Runner",
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "remoteRunner.connectSsh",
+                "title": "Connect SSH & Open Shell",
+                "icon": "$(plug)"
+            },
+            {
+                "command": "remoteRunner.disconnectSsh",
+                "title": "Disconnect SSH",
+                "icon": "$(debug-disconnect)"
+            },
+            {
+                "command": "remoteRunner.debugCode",
+                "title": "Sync, Compile & Debug",
+                "icon": "$(play)"
+            },
+            {
+                "command": "remoteRunner.memCheckCode",
+                "title": "Sync, Compile & Memory Check",
+                "icon": "$(bug)"
+            },
+            {
+                "command": "remoteRunner.stopProcess",
+                "title": "Stop Execution",
+                "icon": "$(stop)"
+            },
+            {
+                "command": "remoteRunner.initSetup",
+                "title": "Initialize Config & SSH Key"
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "remoteRunner.connectSsh",
+                    "group": "navigation@1",
+                    "when": "!remoteRunner.sshConnected"
+                },
+                {
+                    "command": "remoteRunner.disconnectSsh",
+                    "group": "navigation@1",
+                    "when": "remoteRunner.sshConnected"
+                },
+                {
+                    "command": "remoteRunner.debugCode",
+                    "group": "navigation@2",
+                    "when": "!remoteRunner.isRunning"
+                },
+                {
+                    "command": "remoteRunner.memCheckCode",
+                    "group": "navigation@3",
+                    "when": "!remoteRunner.isRunning"
+                },
+                {
+                    "command": "remoteRunner.stopProcess",
+                    "group": "navigation@2",
+                    "when": "remoteRunner.isRunning"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "dependencies": {
+        "ssh-config": "^5.3.0",
+        "ssh2": "^1.15.0",
+        "ssh2-sftp-client": "^9.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.x",
+        "@types/ssh2": "^1.11.0",
+        "@types/ssh2-sftp-client": "^9.0.3",
+        "@types/vscode": "^1.80.0",
+        "typescript": "^5.0.0"
+    },
+    "allowScripts": {
+        "cpu-features@0.0.10": true,
+        "ssh2@1.17.0": true
+    }
+}
